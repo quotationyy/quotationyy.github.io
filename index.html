@@ -2,30 +2,506 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="light">
-<title>quotation.yy</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 66 47'%3E%3Cpath fill='%231C1C1C' d='M4.71429 47H18.8571L28.2857 28.2V0H0V28.2H14.1429L4.71429 47ZM42.4286 47H56.5714L66 28.2V0H37.7143V28.2H51.8571L42.4286 47Z'/%3E%3C/svg%3E">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0a090a">
+<title>HORRORWEEN — Dress to Disturb · quotation.yy</title>
+<meta name="description" content="10/31（六）19:00–23:00 · 台北信義 · Costume Night · Food · Drinks · Music">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://quotationyy.github.io/">
+<meta property="og:title" content="HORRORWEEN — Dress to Disturb">
+<meta property="og:description" content="10/31（六）19:00–23:00 · 台北信義 · Costume Night · Food · Drinks · Music">
+<meta property="og:image" content="https://quotationyy.github.io/halloween2026/poster.jpg">
+<meta property="og:image:width" content="1254">
+<meta property="og:image:height" content="1254">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 66 47'%3E%3Cpath fill='%23FF8A2A' d='M4.71429 47H18.8571L28.2857 28.2V0H0V28.2H14.1429L4.71429 47ZM42.4286 47H56.5714L66 28.2V0H37.7143V28.2H51.8571L42.4286 47Z'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,400&family=EB+Garamond:ital@1&family=Iansui&family=Pinyon+Script&display=swap" rel="stylesheet">
 <style>
-html { background: #fff; }
+:root {
+  --bg: #0a090a;
+  --ink: #f4e7d4;
+  --ink-soft: #cdb89e;
+  --ink-faint: #8f7c69;
+  --orange: #ff8a2a;
+  --amber: #ffc477;
+  --ember: #e2561a;
+  --line: rgba(255, 170, 90, .16);
+  --line-strong: rgba(255, 170, 90, .42);
+
+  --display: "Cinzel", "Iansui", serif;
+  --script: "Pinyon Script", cursive;
+  --sans: "DM Sans", "Iansui", sans-serif;
+  --italic: "EB Garamond", "Iansui", serif;
+  --zh: "Iansui", serif;
+
+  --gutter: max(16px, env(safe-area-inset-left), env(safe-area-inset-right));
+}
+
+* { box-sizing: border-box; }
+html { background: var(--bg); -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
-  /* dvh is the height actually visible on a phone, browser bars
-     excluded, so the mark sits in the middle of what you can see.
-     vh first for browsers that predate dvh. */
-  min-height: 100vh;
-  min-height: 100dvh;
-  display: grid;
-  place-items: center;
-  background: #fff;
+  position: relative;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 1.0625rem;
+  font-weight: 400;
+  line-height: 1.6;
+  overflow-x: hidden;
 }
-.mark { display: block; width: 100px; height: auto; aspect-ratio: 66 / 47; }
+a { color: var(--amber); text-underline-offset: .2em; }
+
+/* ── atmosphere ─────────────────────────────────────────── */
+
+/* Fixed behind everything: charcoal, grey smoke rising from the bottom,
+   film grain. smoke.webp is one seamless tile; each layer is three tiles
+   tall and slides up by exactly one (-33.3333% of itself), so the loop
+   has no seam and the animation stays on the compositor. */
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: linear-gradient(180deg, #0a090a 0%, #121113 45%, #222225 100%);
+}
+.smoke {
+  --tile-w: min(100vw, 640px);
+  --tile-h: calc(var(--tile-w) * 1.6);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: calc(var(--tile-h) * 3);
+  background: url("halloween2026/smoke.webp") 0 0 / var(--tile-w) var(--tile-h) repeat;
+  opacity: .5;
+  animation: rise 48s linear infinite;
+  will-change: transform;
+}
+.smoke-2 {
+  --tile-w: min(140vw, 900px);
+  left: -20%;
+  right: -20%;
+  background-position: 40% 0;
+  opacity: .3;
+  animation-name: rise-flipped;
+  animation-duration: 75s;
+}
+@keyframes rise { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(0, -33.3333%, 0); } }
+@keyframes rise-flipped { from { transform: scaleX(-1) translate3d(0, 0, 0); } to { transform: scaleX(-1) translate3d(0, -33.3333%, 0); } }
+.shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10, 9, 10, .9) 0%, rgba(10, 9, 10, .5) 35%, rgba(10, 9, 10, 0) 75%);
+}
+.grain {
+  position: absolute;
+  inset: 0;
+  background: url("halloween2026/grain.webp") 0 0 / 160px 160px repeat;
+  opacity: .45;
+}
+
+/* Cobwebs in the top corners, swaying a little from where they hang,
+   and loose threads across the top between them. */
+.web {
+  position: absolute;
+  top: 0;
+  height: auto;
+  pointer-events: none;
+  opacity: .32;
+  animation: sway 9s ease-in-out infinite alternate;
+}
+.web path, .drape path { fill: none; stroke: #ebe6df; stroke-width: .6; }
+.web-l { left: -10px; width: clamp(130px, 30vw, 240px); transform-origin: 0 0; }
+.web-r { right: 0; width: clamp(180px, 46vw, 380px); transform-origin: 100% 0; animation-duration: 11s; animation-direction: alternate-reverse; }
+@keyframes sway { from { transform: rotate(-1.2deg); } to { transform: rotate(1.4deg); } }
+.drape {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: clamp(70px, 15vw, 150px);
+  pointer-events: none;
+  opacity: .22;
+}
+.drape path { stroke-width: 1; vector-effect: non-scaling-stroke; }
+
+.sky {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.bat {
+  position: absolute;
+  left: 0;
+  width: 34px;
+  fill: #000;
+  opacity: 0;
+  animation: fly 26s linear infinite;
+}
+.bat svg { display: block; width: 100%; animation: flap .32s ease-in-out infinite alternate; transform-origin: 50% 60%; }
+.bat:nth-child(1) { top: 12vh; animation-delay: 1s; }
+.bat:nth-child(2) { top: 20vh; width: 22px; animation-delay: 3.2s; animation-duration: 31s; }
+.bat:nth-child(3) { top: 7vh;  width: 18px; animation-delay: 14s; animation-duration: 24s; }
+@keyframes fly {
+  0%   { transform: translate(-60px, 0); opacity: 0; }
+  2%   { opacity: .75; }
+  14%  { transform: translate(55vw, -4vh); }
+  26%  { transform: translate(110vw, 3vh); opacity: .75; }
+  27%, 100% { transform: translate(110vw, 3vh); opacity: 0; }
+}
+@keyframes flap { from { transform: scaleY(1); } to { transform: scaleY(.45); } }
+
+/* ── layout ─────────────────────────────────────────────── */
+
+main {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 36rem;
+  margin: 0 auto;
+  padding: 2.25rem var(--gutter) 3rem;
+}
+section { margin-top: 3.75rem; }
+
+/* ── header ─────────────────────────────────────────────── */
+
+.top { text-align: center; }
+.top .mark { display: block; width: 30px; height: auto; margin: 0 auto .7rem; }
+.kicker {
+  margin: 0;
+  font-family: var(--display);
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+h1 {
+  margin: 1.4rem 0 1.6rem;
+  text-align: center;
+  line-height: 1;
+  font-weight: normal;
+}
+.t-main {
+  display: block;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 10.4vw, 4.25rem);
+  letter-spacing: .035em;
+  background: linear-gradient(180deg, #ffd99a 0%, var(--orange) 52%, #b8360c 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 22px rgba(255, 110, 20, .35));
+}
+.t-sub {
+  display: block;
+  margin-top: .15em;
+  font-family: var(--script);
+  font-size: clamp(2rem, 8.6vw, 2.9rem);
+  line-height: 1.1;
+  color: var(--amber);
+}
+
+/* ── poster ─────────────────────────────────────────────── */
+
+.poster { position: relative; margin: 0; }
+.poster::before {
+  content: "";
+  position: absolute;
+  inset: 6%;
+  border-radius: 50%;
+  background: rgba(255, 110, 20, .5);
+  filter: blur(60px);
+  animation: candle 4.5s ease-in-out infinite;
+}
+.poster img {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+  box-shadow: 0 0 0 1px var(--line-strong), 0 24px 60px -18px rgba(0, 0, 0, .9);
+}
+@keyframes candle {
+  0%, 100% { opacity: .55; }
+  22% { opacity: .7; }
+  40% { opacity: .5; }
+  63% { opacity: .75; }
+  80% { opacity: .58; }
+}
+
+/* ── when / where ───────────────────────────────────────── */
+
+.when { margin-top: 2.75rem; text-align: center; }
+.rule {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  margin: 0;
+  font-family: var(--display);
+  font-size: .8rem;
+  font-weight: 600;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+.rule::before, .rule::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--line-strong));
+}
+.rule::after { transform: scaleX(-1); }
+.rule span::before, .rule span::after { content: "✦"; font-size: .7em; margin: 0 .7em; vertical-align: .15em; }
+
+.date {
+  position: relative;
+  display: inline-block;
+  margin: 1.1rem 0 .9rem;
+  padding: .25rem 1.4rem .15rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  font-family: var(--display);
+  font-size: clamp(2.6rem, 12vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--ink);
+}
+.date::before, .date::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  background: var(--orange);
+  transform: translateY(-50%) rotate(45deg);
+}
+.date::before { left: -4px; }
+.date::after { right: -4px; }
+.time {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  color: var(--amber);
+}
+.countdown {
+  margin: .35rem 0 0;
+  font-size: .95rem;
+  color: var(--ink-faint);
+}
+.countdown:empty { display: none; }
+.where { margin: 1.5rem 0 0; font-size: 1.1rem; }
+.where .zh { display: block; margin-top: .2rem; font-size: .9rem; color: var(--ink-soft); }
+
+/* ── buttons ────────────────────────────────────────────── */
+
+.cta { margin-top: 2.25rem; text-align: center; }
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
+  width: 100%;
+  min-height: 3.6rem;
+  padding: .9rem 1rem;
+  border: 0;
+  border-radius: 999px;
+  font-family: var(--display);
+  font-size: clamp(.9rem, 4.2vw, 1.05rem);
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .2s ease;
+}
+.btn-primary {
+  color: #1d0b03;
+  background: linear-gradient(180deg, #ffb058 0%, var(--orange) 45%, var(--ember) 100%);
+  box-shadow: 0 0 0 1px rgba(255, 200, 140, .35) inset, 0 10px 32px -8px rgba(255, 110, 20, .65);
+}
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 0 0 1px rgba(255, 200, 140, .45) inset, 0 14px 40px -8px rgba(255, 110, 20, .85); }
+.btn-primary:active { transform: translateY(1px); }
+.btn svg { width: 1.15em; height: 1.15em; flex: none; }
+.cta-note { margin: 1rem 0 0; font-size: 1rem; color: var(--ink-soft); }
+.cta-note .zh { font-size: .85rem; }
+
+/* ── sections ───────────────────────────────────────────── */
+
+.label { margin: 0; }
+.label-zh {
+  margin: .35rem 0 1.5rem;
+  text-align: center;
+  font-family: var(--zh);
+  font-size: .9rem;
+  letter-spacing: .2em;
+  color: var(--ink-soft);
+}
+
+.intro { text-align: center; }
+.intro p { margin: 0 0 .6rem; font-family: var(--italic); font-size: 1.45rem; font-style: italic; line-height: 1.4; }
+.intro p:first-child { font-size: 1.6rem; }
+.intro .blood { color: #e0283f; font-style: normal; }
+/* 🖤 disappears on this background without a little light behind it. */
+.heart { font-style: normal; filter: drop-shadow(0 0 5px rgba(255, 140, 60, .75)); }
+
+.pairs { list-style: none; margin: 0; padding: 0; }
+.pairs li {
+  display: grid;
+  grid-template-columns: 1.5rem 1fr;
+  padding: .85rem 0;
+  border-top: 1px solid var(--line);
+}
+.pairs li:last-child { border-bottom: 1px solid var(--line); }
+.pairs li::before { content: "✦"; color: var(--orange); font-size: .75rem; line-height: 2.2; }
+.en { display: block; }
+.zh { display: block; font-family: var(--zh); font-size: .9rem; font-weight: 400; color: var(--ink-soft); line-height: 1.65; }
+.pairs .zh { grid-column: 2; }
+
+/* ── end ────────────────────────────────────────────────── */
+
+.end { margin-top: 4.5rem; text-align: center; }
+.end .sign .heart { font-size: .6em; vertical-align: .15em; }
+.end .sign { margin: 0; font-family: var(--script); font-size: clamp(2rem, 9vw, 2.6rem); line-height: 1.2; color: var(--amber); }
+.end .by { margin: .6rem 0 2rem; font-family: var(--display); font-size: .85rem; letter-spacing: .24em; color: var(--ink-soft); }
+footer { margin-top: 3rem; }
+footer .mark { display: block; width: 22px; height: auto; margin: 0 auto; opacity: .7; }
+
+@media (min-width: 720px) {
+  main { padding-top: 3.5rem; }
+  .intro p { font-size: 1.55rem; }
+  .intro p:first-child { font-size: 1.75rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bat { display: none; }
+  .smoke, .web { animation: none; }
+  .poster::before { animation: none; }
+  .btn { transition: none; }
+}
 </style>
 </head>
 <body>
-<svg class="mark" viewBox="0 0 66 47" role="img" aria-label="quotation.yy"
-     xmlns="http://www.w3.org/2000/svg">
-  <path d="M4.71429 47H18.8571L28.2857 28.2V0H0V28.2H14.1429L4.71429 47ZM42.4286 47H56.5714L66 28.2V0H37.7143V28.2H51.8571L42.4286 47Z" fill="#1C1C1C"/>
-</svg>
+
+<div class="bg" aria-hidden="true">
+  <div class="smoke"></div>
+  <div class="smoke smoke-2"></div>
+  <div class="shade"></div>
+  <div class="grain"></div>
+</div>
+<svg class="drape" viewBox="0 0 1000 150" preserveAspectRatio="none" aria-hidden="true"><path d="M0 34Q300 150 640 0"/><path d="M230 0Q560 96 1000 26"/><path d="M470 0Q560 44 700 8"/></svg>
+<svg class="web web-l" viewBox="0 0 200 200" aria-hidden="true"><path d="M0 0L199.9 7.0M0 0L192.3 55.1M0 0L171.4 103.0M0 0L138.9 143.9M0 0L97.0 174.9M0 0L48.4 194.1M0 0L7.0 199.9M28.0 1.0Q27.3 4.4 28.0 8.0Q25.2 10.9 23.8 14.3Q20.7 16.4 18.7 19.4Q15.8 21.6 13.8 25.0Q10.1 25.8 7.0 28.0Q3.9 27.0 0.9 27.2M52.3 1.8Q48.9 7.6 48.0 13.8Q45.1 19.8 44.8 26.9Q40.1 32.0 37.5 38.9Q30.3 40.7 24.8 44.8Q18.0 45.5 12.1 48.7Q6.8 49.8 1.9 53.2M79.1 2.8Q77.5 12.5 79.9 22.9Q72.3 31.2 68.6 41.2Q59.4 47.0 53.4 55.3Q45.0 61.3 39.1 70.6Q28.8 73.6 20.1 80.5Q11.2 77.8 2.7 78.4M111.7 3.9Q104.0 16.1 101.7 29.2Q95.1 41.6 93.7 56.3Q84.3 67.4 79.5 82.3Q64.5 86.7 53.1 95.9Q38.3 96.6 25.6 102.6Q14.4 104.7 3.9 111.4M138.9 4.8Q136.6 22.1 141.4 40.6Q128.8 55.8 123.2 74.0Q106.1 83.8 94.8 98.1Q79.6 108.1 68.7 123.9Q50.8 130.1 35.7 143.3Q19.9 138.9 4.9 140.7M180.5 6.3Q167.6 25.9 163.5 46.9Q151.8 66.2 148.2 89.1Q133.9 107.3 126.9 131.4Q103.6 139.5 86.0 155.1Q61.7 155.3 40.9 164.0Q23.0 166.5 6.2 176.4"/></svg>
+<svg class="web web-r" viewBox="0 0 200 200" aria-hidden="true"><path transform="matrix(-1 0 0 1 200 0)" d="M0 0L200 3M0 0L196 42M0 0L183 81M0 0L162 118M0 0L134 149M0 0L100 173M0 0L62 190M0 0L21 199M0 0L3 200M18.6 0.3Q18.0 2.0 18.2 3.9Q16.5 5.3 15.8 7.0Q14.6 8.5 14.2 10.3Q13.1 11.8 12.6 14.0Q10.6 14.5 9.1 15.8Q7.0 15.6 5.3 16.3Q3.5 16.7 1.9 17.9Q1.1 18.2 0.3 18.9M33.0 0.6Q31.8 3.6 32.1 6.8Q31.3 10.3 32.3 14.4Q29.5 17.0 28.2 20.5Q24.3 21.7 21.7 24.1Q18.7 25.9 16.8 29.1Q13.5 30.7 11.0 33.9Q7.1 33.0 3.6 33.8Q2.0 32.7 0.6 32.3M53.5 0.9Q51.9 5.9 52.7 11.2Q47.9 15.4 45.7 20.3Q42.2 24.4 40.9 29.7Q37.6 34.1 36.4 40.4Q30.6 42.0 26.4 45.7Q20.3 45.1 15.3 47.0Q10.1 48.0 5.4 51.6Q3.1 52.4 1.0 54.6M69.1 1.2Q66.4 7.5 66.8 14.2Q65.2 21.5 67.3 29.9Q61.6 35.5 59.1 42.9Q50.8 45.4 45.4 50.4Q39.1 54.0 34.9 60.4Q28.2 63.9 23.0 70.8Q14.8 69.1 7.5 70.9Q4.3 68.3 1.2 67.4M94.3 1.6Q91.8 10.5 93.5 19.9Q85.0 27.2 81.1 36.1Q74.7 43.1 72.2 52.4Q66.4 60.2 64.2 71.3Q54.1 74.3 46.9 81.2Q36.0 80.1 27.1 83.3Q17.8 84.8 9.6 90.9Q5.5 92.6 1.7 96.6M111.3 1.9Q106.6 12.1 107.0 22.7Q104.5 34.4 107.7 47.9Q98.9 57.1 95.2 69.1Q81.9 73.1 73.1 81.1Q62.8 86.6 55.8 96.7Q45.1 102.3 36.9 113.6Q23.8 111.1 12.0 114.4Q6.9 109.9 1.9 108.3M140.0 2.4Q136.5 15.7 139.6 29.7Q126.9 40.7 121.1 53.9Q111.2 64.2 107.1 77.8Q98.6 89.5 95.4 106.0Q80.7 110.8 70.1 121.4Q53.7 119.5 40.3 124.2Q26.6 126.2 14.2 134.8Q8.2 137.5 2.5 143.8M157.8 2.8Q150.7 17.0 150.7 32.0Q147.1 48.4 151.6 67.5Q139.6 80.6 134.8 97.9Q115.9 103.6 103.4 114.9Q88.7 122.3 78.5 136.0Q63.5 144.2 52.1 160.2Q33.7 157.1 17.0 162.2Q9.7 155.5 2.7 153.0M189.3 3.3Q185.2 21.3 189.9 40.4Q172.7 55.4 164.9 73.4Q151.1 87.1 145.0 105.3Q133.5 121.1 129.3 143.6Q109.5 150.6 95.5 165.3Q73.2 162.6 54.9 168.9Q36.1 171.1 19.2 182.3Q11.1 186.3 3.4 195.1"/></svg>
+
+<div class="sky" aria-hidden="true">
+  <div class="bat"><svg viewBox="0 0 44 18"><path d="M22 6c1-2 1-4 0-5l-1.6 2.4h-2.2L16.6 1c-1 1-1 3 0 5-3-3.5-9.5-4.6-16.6-1.2C4.6 6.2 7 9.2 7.4 13c2.4-2 5.4-2.2 7.6-.6.8-1.8 2.6-2.6 4.4-2 .6 1.6 1.4 3 2.6 4.2 1.2-1.2 2-2.6 2.6-4.2 1.8-.6 3.6.2 4.4 2 2.2-1.6 5.2-1.4 7.6.6.4-3.8 2.8-6.8 7.4-8.2C37.5 1.4 31 2.5 28 6c1-2 1-4 0-5l-1.6 2.4h-2.2L22.6 1z" transform="translate(-3 0)"/></svg></div>
+  <div class="bat"><svg viewBox="0 0 44 18"><path d="M22 6c1-2 1-4 0-5l-1.6 2.4h-2.2L16.6 1c-1 1-1 3 0 5-3-3.5-9.5-4.6-16.6-1.2C4.6 6.2 7 9.2 7.4 13c2.4-2 5.4-2.2 7.6-.6.8-1.8 2.6-2.6 4.4-2 .6 1.6 1.4 3 2.6 4.2 1.2-1.2 2-2.6 2.6-4.2 1.8-.6 3.6.2 4.4 2 2.2-1.6 5.2-1.4 7.6.6.4-3.8 2.8-6.8 7.4-8.2C37.5 1.4 31 2.5 28 6c1-2 1-4 0-5l-1.6 2.4h-2.2L22.6 1z" transform="translate(-3 0)"/></svg></div>
+  <div class="bat"><svg viewBox="0 0 44 18"><path d="M22 6c1-2 1-4 0-5l-1.6 2.4h-2.2L16.6 1c-1 1-1 3 0 5-3-3.5-9.5-4.6-16.6-1.2C4.6 6.2 7 9.2 7.4 13c2.4-2 5.4-2.2 7.6-.6.8-1.8 2.6-2.6 4.4-2 .6 1.6 1.4 3 2.6 4.2 1.2-1.2 2-2.6 2.6-4.2 1.8-.6 3.6.2 4.4 2 2.2-1.6 5.2-1.4 7.6.6.4-3.8 2.8-6.8 7.4-8.2C37.5 1.4 31 2.5 28 6c1-2 1-4 0-5l-1.6 2.4h-2.2L22.6 1z" transform="translate(-3 0)"/></svg></div>
+</div>
+
+<main>
+
+  <header class="top">
+    <svg class="mark" viewBox="0 0 66 47" role="img" aria-label="quotation.yy" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4.71429 47H18.8571L28.2857 28.2V0H0V28.2H14.1429L4.71429 47ZM42.4286 47H56.5714L66 28.2V0H37.7143V28.2H51.8571L42.4286 47Z" fill="#f4e7d4"/>
+    </svg>
+    <p class="kicker">quotation.yy presents</p>
+  </header>
+
+  <h1>
+    <span class="t-main">Horrorween</span>
+    <span class="t-sub">Dress to Disturb</span>
+  </h1>
+
+  <figure class="poster">
+    <img src="halloween2026/poster.jpg" width="1254" height="1254"
+         alt="HORRORWEEN — Dress to Disturb 活動海報：Oct 31，Costume Night・Food・Drinks・Music，7:00–11:00 PM，Come dressed to impress">
+  </figure>
+
+  <section class="when" aria-label="時間與地點">
+    <p class="rule"><span>Saturday · 週六</span></p>
+    <p class="date">Oct 31</p>
+    <p class="time">7:00 – 11:00 PM</p>
+    <p class="countdown" id="countdown"></p>
+    <p class="where">
+      Xinyi District, Taipei
+      <span class="zh">台北市信義區</span>
+    </p>
+  </section>
+
+  <div class="cta">
+    <a class="btn btn-primary" href="https://www.instagram.com/quotation.yy/">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg>
+      Follow @quotation.yy
+    </a>
+    <p class="cta-note">
+      <span class="en">Interested? Send us a DM on Instagram.</span>
+      <span class="zh">有興趣參加嗎？歡迎透過 Instagram 私訊我們！</span>
+    </p>
+  </div>
+
+  <section class="intro">
+    <p>Halloween is back, and things are about to get a little twisted. <span class="blood">🩸</span></p>
+    <p>Costumes, cocktails, questionable decisions, and a little chaos.</p>
+    <p>What could possibly go wrong? <span class="heart">🖤</span></p>
+  </section>
+
+  <section>
+    <h2 class="label rule"><span>What to expect</span></h2>
+    <p class="label-zh">活動內容</p>
+    <ul class="pairs">
+      <li><span class="en">Unlimited drinks — cocktails, soft drinks &amp; more</span><span class="zh">酒水暢飲 — 調酒、無酒精飲料等</span></li>
+      <li><span class="en">Dinner served until 9:30 PM</span><span class="zh">晚餐主食供應至 21:30</span></li>
+      <li><span class="en">Bar bites available after 9:30 PM</span><span class="zh">21:30 後持續供應下酒菜</span></li>
+      <li><span class="en">Horror-inspired costumes</span><span class="zh">恐怖主題創意變裝</span></li>
+      <li><span class="en">Music &amp; spooky vibes</span><span class="zh">音樂與萬聖節氛圍</span></li>
+    </ul>
+  </section>
+
+  <section class="end">
+    <p class="sign">See you on the dark side <span class="heart">🖤</span></p>
+    <p class="by">— QUOTATION.YY</p>
+    <a class="btn btn-primary" href="https://www.instagram.com/quotation.yy/">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg>
+      Follow @quotation.yy
+    </a>
+  </section>
+
+  <footer>
+    <svg class="mark" viewBox="0 0 66 47" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4.71429 47H18.8571L28.2857 28.2V0H0V28.2H14.1429L4.71429 47ZM42.4286 47H56.5714L66 28.2V0H37.7143V28.2H51.8571L42.4286 47Z" fill="#cdb89e"/>
+    </svg>
+  </footer>
+
+</main>
+
+<script>
+/* Doors open 2026-10-31 19:00 in Taipei (UTC+8). */
+(function countdown() {
+  var el = document.getElementById('countdown');
+  var DAY = 86400000, TPE = 8 * 3600000;
+  var start = Date.UTC(2026, 9, 31, 11, 0);
+  var end = Date.UTC(2026, 9, 31, 15, 0);
+  var now = Date.now();
+  if (now >= end) return;
+  if (now >= start) { el.textContent = 'Happening now · 進行中'; return; }
+  // Whole calendar days between today and the 31st, both in Taipei time.
+  var days = Math.round((Math.floor((start + TPE) / DAY) - Math.floor((now + TPE) / DAY)));
+  el.textContent = days === 0 ? 'Tonight · 就是今晚'
+                 : days === 1 ? 'Tomorrow night · 就是明晚'
+                 : days + ' nights to go · 倒數 ' + days + ' 天';
+})();
+
+</script>
 </body>
 </html>
